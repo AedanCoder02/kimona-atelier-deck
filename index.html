@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kimona Atelier — Estrategia Digital 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #060606;
+      --surface: rgba(255,255,255,0.034);
+      --surface-2: rgba(255,255,255,0.055);
+      --border: rgba(255,255,255,0.07);
+      --gold: #c9a96e;
+      --gold-dim: rgba(201,169,110,0.35);
+      --text: #f0ebe3;
+      --muted: rgba(240,235,227,0.45);
+      --muted-2: rgba(240,235,227,0.22);
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      height: 100%;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+    }
+
+    body { height: 100%; }
+
+    /* ── SLIDE BASE ── */
+    .slide {
+      height: 100vh;
+      scroll-snap-align: start;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5vh 8vw;
+      overflow: hidden;
+    }
+
+    /* Subtle grain overlay */
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.018;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    .slide > * { position: relative; z-index: 1; }
+
+    /* ── TYPE ── */
+    .label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.1rem;
+    }
+
+    .display {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.05;
+    }
+
+    .body-sm {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── GLASS ── */
+    .glass {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 22px 26px;
+    }
+
+    /* ── DIVIDER ── */
+    .rule {
+      width: 44px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.4rem 0;
+    }
+
+    /* ── DOT NAV ── */
+    #nav {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      z-index: 200;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--muted-2);
+      cursor: pointer;
+      transition: background 0.35s, transform 0.35s;
+    }
+
+    .dot.on {
+      background: var(--gold);
+      transform: scale(1.5);
+    }
+
+    /* ── SLIDE # ── */
+    .snum {
+      position: absolute;
+      bottom: 28px;
+      right: 8vw;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--muted-2);
+    }
+
+    /* ── REVEAL ── */
+    .r {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .r.show { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.10s; }
+    .d2 { transition-delay: 0.20s; }
+    .d3 { transition-delay: 0.30s; }
+    .d4 { transition-delay: 0.40s; }
+    .d5 { transition-delay: 0.50s; }
+
+
+    /* ════════════════════════════════
+       SLIDE 1 — COVER
+    ════════════════════════════════ */
+    #s1 { justify-content: flex-end; padding-bottom: 10vh; }
+
+    #s1 .glow {
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      width: 65vw;
+      height: 80vh;
+      background: radial-gradient(ellipse at 70% 40%, rgba(201,169,110,0.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #s1 .headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(6.5rem, 16vw, 14rem);
+      font-weight: 300;
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+
+    #s1 .headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    #s1 .meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 2.2rem;
+    }
+
+    #s1 .meta-rule {
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    #s1 .meta-text {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    #s1 .brand-tag {
+      position: absolute;
+      top: 36px;
+      right: 8vw;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+    }
+
+    #s1 .brand-tag span { color: var(--gold); }
+
+
+    /* ════════════════════════════════
+       SLIDE 2 — LA MARCA
+    ════════════════════════════════ */
+    #s2 .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      margin-top: 1.8rem;
+      align-items: start;
+    }
+
+    #s2 .quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(240,235,227,0.55);
+      line-height: 1.6;
+      margin-top: 1.6rem;
+    }
+
+    .pillar {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .pk {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      min-width: 88px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .pv {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDE 3 — INFLEXIÓN
+    ════════════════════════════════ */
+    #s3 .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      margin-top: 1.8rem;
+      align-items: end;
+    }
+
+    #s3 .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+      height: 170px;
+    }
+
+    .bcol {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      flex: 1;
+    }
+
+    .bval {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .bbar {
+      width: 100%;
+      max-width: 72px;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(to top, rgba(201,169,110,0.25), rgba(201,169,110,0.78));
+      transform-origin: bottom;
+      transform: scaleY(0);
+      transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .bbar.grow { transform: scaleY(1); }
+
+    .blbl {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .stat-stack { display: flex; flex-direction: column; gap: 18px; }
+
+    .snum-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .snum-lbl {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .snum-big.gold { color: var(--gold); }
+
+
+    /* ════════════════════════════════
+       SLIDE 4 — AUDIENCIA
+    ════════════════════════════════ */
+    #s4 .grid {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr;
+      gap: 3vw;
+      margin-top: 1.8rem;
+      align-items: start;
+    }
+
+    #s4 .big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 7vw, 8rem);
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .gbar-wrap { margin-top: 14px; }
+    .gbar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .gbar-labels strong { color: var(--text); font-weight: 400; }
+    .track {
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .fill {
+      height: 100%;
+      background: var(--gold);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.85s ease-out 0.3s;
+    }
+    .fill.grow { transform: scaleX(1); }
+
+    .crow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+    .cn {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+      width: 72px;
+      flex-shrink: 0;
+    }
+    .ctrack {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+    }
+    .cfill {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      background: var(--gold-dim);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.7s ease-out;
+    }
+    .cfill.grow { transform: scaleX(1); }
+    .cpct {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDE 5 — MOTOR
+    ════════════════════════════════ */
+    #s5 .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: center;
+      margin-top: 1rem;
+      height: 65vh;
+    }
+
+    #s5 .pct-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(8rem, 20vw, 20rem);
+      font-weight: 300;
+      line-height: 0.82;
+      color: var(--text);
+    }
+
+    #s5 .pct-num sup {
+      font-size: 0.3em;
+      color: var(--gold);
+      vertical-align: super;
+    }
+
+    #s5 .pct-desc {
+      font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 480px;
+    }
+
+    #s5 .split {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.6rem;
+    }
+
+    #s5 .split-stat { }
+    #s5 .split-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+    #s5 .split-lbl {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDE 6 — OPORTUNIDAD
+    ════════════════════════════════ */
+    #s6 .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3vw;
+      margin-top: 2rem;
+    }
+
+    #s6 .onum {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5vw, 6rem);
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    #s6 .onum.gold { color: var(--gold); }
+
+    #s6 .olbl {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    #s6 .ital-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(240,235,227,0.5);
+      line-height: 1.6;
+      margin-top: 2.2rem;
+      max-width: 680px;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDES 7–9 — ESTRATEGIAS
+    ════════════════════════════════ */
+    .strat-bg-num {
+      position: absolute;
+      right: 7vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(9rem, 22vw, 22rem);
+      font-weight: 300;
+      color: rgba(201,169,110,0.055);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .tactic {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+
+    .tn {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      padding-top: 3px;
+      flex-shrink: 0;
+      width: 22px;
+    }
+
+    .tbody { flex: 1; }
+
+    .ttitle {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .tdesc {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDE 8 — USA — insight bar
+    ════════════════════════════════ */
+    #s8 .insight-bar {
+      display: flex;
+      gap: 2vw;
+      margin-top: 1.6rem;
+      margin-bottom: 1.6rem;
+    }
+
+    #s8 .ib {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    #s8 .ib-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    #s8 .ib-lbl {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDE 9 — COMERCIO — funnel
+    ════════════════════════════════ */
+    #s9 .funnel {
+      display: flex;
+      align-items: stretch;
+      margin: 1.6rem 0;
+      max-width: 720px;
+    }
+
+    #s9 .fnode {
+      flex: 1;
+      text-align: center;
+      padding: 16px 10px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    #s9 .fnode:first-child { border-left: 1px solid var(--border); border-radius: 8px 0 0 8px; }
+    #s9 .fnode:last-child  { border-right: 1px solid var(--border); border-radius: 0 8px 8px 0; }
+
+    #s9 .fnum {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    #s9 .fnum.gold { color: var(--gold); }
+
+    #s9 .flbl {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    #s9 .farrow {
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      color: var(--gold);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+
+    /* ════════════════════════════════
+       SLIDE 10 — PROYECCIONES
+    ════════════════════════════════ */
+    #s10 .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2vw;
+      margin-top: 2rem;
+    }
+
+    #s10 .pcard {
+      padding: 22px 24px;
+    }
+
+    #s10 .pperiod {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    #s10 .pnum {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 4rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    #s10 .pnum.s {
+      font-size: clamp(1.5rem, 2.5vw, 3rem);
+      color: var(--gold);
+      margin-top: 10px;
+    }
+
+    #s10 .pmet {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    #s10 .pacts {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    #s10 .pact {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--muted);
+      display: flex;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+
+    #s10 .pact::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+
+
+    /* ════════════════════════════════
+       SLIDE 11 — CTA
+    ════════════════════════════════ */
+    #s11 {
+      justify-content: flex-end;
+      padding-bottom: 9vh;
+    }
+
+    #s11 .glow {
+      position: absolute;
+      bottom: -20%;
+      left: -8%;
+      width: 70vw;
+      height: 70vh;
+      background: radial-gradient(ellipse at 30% 60%, rgba(201,169,110,0.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #s11 .big-cta {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 9vw, 9.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      max-width: 860px;
+    }
+
+    #s11 .big-cta em { color: var(--gold); font-style: italic; }
+
+    #s11 .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2vw;
+      margin-top: 2.5rem;
+    }
+
+    #s11 .step {
+      padding: 18px 22px;
+    }
+
+    #s11 .speriod {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    #s11 .stitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    #s11 .sdesc {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    #s11 .footer {
+      margin-top: 2rem;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+    }
+
+    #s11 .footer span { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- Dot navigation -->
+<nav id="nav"></nav>
+
+
+<!-- ══════════════════════════════════════
+     01 · PORTADA
+══════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="glow"></div>
+  <div class="brand-tag r">Presentado por <span>Oasis Studio</span></div>
+  <div class="label r d1">Estrategia Digital · 2026</div>
+  <h1 class="headline r d2">
+    KIMONA<br><em>Atelier</em>
+  </h1>
+  <div class="meta r d3">
+    <div class="meta-rule"></div>
+    <div class="meta-text">Crecimiento · Estrategia · Proyecciones</div>
+  </div>
+  <span class="snum">01</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     02 · LA MARCA
+══════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="label r">La marca</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5.5vw, 5.8rem); max-width: 680px;">
+    Una marca de autor.<br>Hecha en España.
+  </h2>
+
+  <div class="grid r d2">
+    <div>
+      <p class="body-sm" style="max-width: 420px;">
+        Kimona by Jana Pérez diseña y fabrica cada pieza en sus propios talleres en España — producción circular, siluetas consideradas, precios desde $267 a $297. Una propuesta que conecta la artesanía europea con el mercado global.
+      </p>
+      <p class="quote">
+        "El canal digital es la única frontera entre una marca extraordinaria y su audiencia global."
+      </p>
+    </div>
+    <div class="glass">
+      <div class="pillar">
+        <div class="pk">Editorial</div>
+        <div class="pv">Dirección de arte · campaña y grid</div>
+      </div>
+      <div class="pillar">
+        <div class="pk">Contenido</div>
+        <div class="pv">Posts, reels e historias con cadencia</div>
+      </div>
+      <div class="pillar">
+        <div class="pk">Comercio</div>
+        <div class="pv">Shopify · catálogo, PDP, checkout</div>
+      </div>
+      <div class="pillar" style="margin-bottom: 0;">
+        <div class="pk">Distribución</div>
+        <div class="pv">Instagram orgánico + adquisición pagada</div>
+      </div>
+    </div>
+  </div>
+  <span class="snum">02</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     03 · EL PUNTO DE INFLEXIÓN
+══════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="label r">El historial</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5.5vw, 5.5rem);">
+    El crecimiento<br>ya sucedió.
+  </h2>
+  <p class="body-sm r d2" style="max-width: 580px; margin-top: 0.4rem;">
+    De marzo a mayo de 2026 el canal Instagram de Kimona rompió su techo histórico de forma sostenida.
+  </p>
+
+  <div class="layout r d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; margin-top: 1.8rem; align-items: end;">
+    <div class="chart">
+      <div class="bcol">
+        <span class="bval">27.6K</span>
+        <div class="bbar" style="height: 30px;" data-delay="0"></div>
+        <span class="blbl">Mar</span>
+      </div>
+      <div class="bcol">
+        <span class="bval">35.1K</span>
+        <div class="bbar" style="height: 38px;" data-delay="120"></div>
+        <span class="blbl">Abr</span>
+      </div>
+      <div class="bcol">
+        <span class="bval">159.9K</span>
+        <div class="bbar" style="height: 152px;" data-delay="240"></div>
+        <span class="blbl">May</span>
+      </div>
+    </div>
+
+    <div class="stat-stack">
+      <div class="r d3">
+        <div class="snum-big">222,653</div>
+        <div class="snum-lbl">Vistas totales · Mar – May</div>
+      </div>
+      <div class="r d3" style="transition-delay: 0.32s;">
+        <div class="snum-big gold">+95%</div>
+        <div class="snum-lbl">Alcance mensual vs período anterior</div>
+      </div>
+      <div class="r d4">
+        <div class="snum-big gold">+82.9%</div>
+        <div class="snum-lbl">Punto de inflexión · Marzo</div>
+      </div>
+    </div>
+  </div>
+  <span class="snum">03</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     04 · AUDIENCIA
+══════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="label r">La audiencia</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5vw, 5.2rem);">
+    Sabemos exactamente<br>quién nos mira.
+  </h2>
+
+  <div class="grid r d2">
+    <div class="glass" style="text-align: center; padding: 28px 36px; align-self: start;">
+      <div class="big">16,907</div>
+      <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 6px;">Seguidores actuales</div>
+    </div>
+
+    <div class="glass r d3">
+      <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">Género</div>
+      <div class="gbar-wrap">
+        <div class="gbar-labels">
+          <span><strong>Mujeres</strong> · 77.8%</span>
+          <span>Hombres · 22.2%</span>
+        </div>
+        <div class="track"><div class="fill" style="width: 77.8%;"></div></div>
+      </div>
+      <p class="body-sm" style="font-size: 12px; margin-top: 14px;">
+        Audiencia de compra perfectamente alineada con una marca de moda femenina de autor.
+      </p>
+    </div>
+
+    <div class="glass r d4">
+      <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">Países principales</div>
+      <div class="crow">
+        <span class="cn">EE. UU.</span>
+        <div class="ctrack"><div class="cfill" style="width: 100%;"></div></div>
+        <span class="cpct">28.9%</span>
+      </div>
+      <div class="crow">
+        <span class="cn">India</span>
+        <div class="ctrack"><div class="cfill" style="width: 92%;"></div></div>
+        <span class="cpct">26.7%</span>
+      </div>
+      <div class="crow">
+        <span class="cn">Letonia</span>
+        <div class="ctrack"><div class="cfill" style="width: 79%;"></div></div>
+        <span class="cpct">22.8%</span>
+      </div>
+      <div class="crow" style="margin-bottom: 0;">
+        <span class="cn">España</span>
+        <div class="ctrack"><div class="cfill" style="width: 13%;"></div></div>
+        <span class="cpct">3.8%</span>
+      </div>
+    </div>
+  </div>
+  <span class="snum">04</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     05 · MOTOR DE DESCUBRIMIENTO
+══════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; height: 70vh;">
+    <div>
+      <div class="label r">Motor orgánico</div>
+      <div class="pct-num r d1">94.7<sup>%</sup></div>
+    </div>
+    <div>
+      <p class="pct-desc r d2">
+        del alcance proviene de cuentas que <em>aún no nos siguen</em> — el contenido está funcionando como motor de descubrimiento orgánico sin un solo euro en pauta.
+      </p>
+      <div class="rule r d3"></div>
+      <div class="glass r d3">
+        <div class="split">
+          <div class="split-stat">
+            <div class="split-num">362</div>
+            <div class="split-lbl">Alcance · Seguidores</div>
+          </div>
+          <div class="split-stat" style="text-align: right;">
+            <div class="split-num" style="color: var(--gold);">7,063</div>
+            <div class="split-lbl">Alcance · No seguidores</div>
+          </div>
+        </div>
+      </div>
+      <p class="body-sm r d4" style="margin-top: 14px; font-size: 13px;">
+        Alcance total: <strong style="color: var(--text); font-weight: 400;">7,458</strong> · <span style="color: var(--gold);">+7.2%</span> vs período anterior. 100% orgánico.
+      </p>
+    </div>
+  </div>
+  <span class="snum">05</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     06 · LA OPORTUNIDAD
+══════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="label r">La oportunidad</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5.5vw, 5.8rem);">
+    El mercado<br>está esperando.
+  </h2>
+
+  <div class="two r d2">
+    <div class="glass">
+      <div class="onum">254M – 299M</div>
+      <div class="olbl">Audiencia potencial estimada</div>
+      <p class="body-sm" style="margin-top: 12px; font-size: 12px;">
+        El pool de personas alcanzables con la configuración actual de la cuenta. Kimona apenas ha tocado la superficie.
+      </p>
+    </div>
+    <div class="glass">
+      <div class="onum gold">0%</div>
+      <div class="olbl">Inversión actual en pauta</div>
+      <p class="body-sm" style="margin-top: 12px; font-size: 12px;">
+        Todo el crecimiento de los últimos meses ha sido completamente orgánico. El primer euro en pauta actuará como catalizador exponencial sobre una base ya probada.
+      </p>
+    </div>
+  </div>
+
+  <p class="ital-quote r d3">
+    "Una base orgánica validada es el activo más valioso antes de escalar con paid. Kimona ya lo tiene."
+  </p>
+  <span class="snum">06</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     07 · ESTRATEGIA I — EDITORIAL
+══════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="strat-bg-num">I</div>
+  <div class="label r">Estrategia · 01</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5vw, 5.5rem); max-width: 560px;">
+    Arquitectura<br>Editorial
+  </h2>
+  <div class="rule r d2"></div>
+  <div style="max-width: 580px;">
+    <div class="tactic r d2">
+      <div class="tn">01</div>
+      <div class="tbody">
+        <div class="ttitle">Reels como infraestructura</div>
+        <div class="tdesc">El pico de Mayo demostró que el video es el formato de descubrimiento principal. Mínimo 3 Reels semanales con narrativa visual consistente de marca.</div>
+      </div>
+    </div>
+    <div class="tactic r d3">
+      <div class="tn">02</div>
+      <div class="tbody">
+        <div class="ttitle">Grid editorial coherente</div>
+        <div class="tdesc">El perfil es la primera tienda — cada publicación debe contribuir a una identidad visual reconocible: paleta, iluminación y tono uniformes.</div>
+      </div>
+    </div>
+    <div class="tactic r d4">
+      <div class="tn">03</div>
+      <div class="tbody">
+        <div class="ttitle">Cadencia semanal definida</div>
+        <div class="tdesc">Los picos de historias documentados coinciden con publicaciones programadas. La consistencia construye <em>audience memory</em> y fidelidad de alcance.</div>
+      </div>
+    </div>
+    <div class="tactic r d5">
+      <div class="tn">04</div>
+      <div class="tbody">
+        <div class="ttitle">Storytelling de origen</div>
+        <div class="tdesc">Spain-made es diferenciador global. Contenido detrás de cámara — talleres, confección, materiales — autenticidad que las grandes marcas no pueden replicar.</div>
+      </div>
+    </div>
+  </div>
+  <span class="snum">07</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     08 · ESTRATEGIA II — USA
+══════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="strat-bg-num">II</div>
+  <div class="label r">Estrategia · 02</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5vw, 5.5rem); max-width: 560px;">
+    Activación<br>Mercado USA
+  </h2>
+  <div class="rule r d2"></div>
+  <p class="body-sm r d2" style="max-width: 580px;">
+    Estados Unidos es el mercado #1 con el 28.9% de la audiencia actual, y las ciudades de mayor potencial ya están mapeadas: Nueva York, Los Ángeles, Houston, Chicago.
+  </p>
+  <div class="insight-bar r d3">
+    <div class="ib">
+      <div class="ib-num">28.9%</div>
+      <div class="ib-lbl">Audiencia actual · EE. UU.</div>
+    </div>
+    <div class="ib">
+      <div class="ib-num" style="color: var(--gold);">#1</div>
+      <div class="ib-lbl">País con mayor alcance</div>
+    </div>
+    <div class="ib">
+      <div class="ib-num">NYC · LA</div>
+      <div class="ib-lbl">Ciudades objetivo prioritarias</div>
+    </div>
+  </div>
+  <div style="max-width: 580px;">
+    <div class="tactic r d3">
+      <div class="tn">01</div>
+      <div class="tbody">
+        <div class="ttitle">Contenido bilingüe estratégico</div>
+        <div class="tdesc">Captions en inglés con el acento europeo como diferenciador. "Made in Spain" resuena fuertemente en el mercado premium americano.</div>
+      </div>
+    </div>
+    <div class="tactic r d4">
+      <div class="tn">02</div>
+      <div class="tbody">
+        <div class="ttitle">Pauta geo-segmentada</div>
+        <div class="tdesc">Primera inversión en ads enfocada en las 5 ciudades US de mayor potencial. Audiencia: mujeres 30–50, intereses en moda, lujo accesible.</div>
+      </div>
+    </div>
+    <div class="tactic r d5">
+      <div class="tn">03</div>
+      <div class="tbody">
+        <div class="ttitle">Colaboraciones con creadores USA</div>
+        <div class="tdesc">Micro-influencers en NYC y LA con audiencias en el segmento de lujo accesible — coste bajo, credibilidad alta, alcance local comprobado.</div>
+      </div>
+    </div>
+  </div>
+  <span class="snum">08</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     09 · ESTRATEGIA III — COMERCIO
+══════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="strat-bg-num">III</div>
+  <div class="label r">Estrategia · 03</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5vw, 5.5rem); max-width: 560px;">
+    Del Seguidor<br>al Cliente
+  </h2>
+  <div class="rule r d2"></div>
+  <div class="funnel r d2">
+    <div class="fnode">
+      <div class="fnum">7,458</div>
+      <div class="flbl">Alcance</div>
+    </div>
+    <div class="farrow">→</div>
+    <div class="fnode">
+      <div class="fnum">601</div>
+      <div class="flbl">Interacciones</div>
+    </div>
+    <div class="farrow">→</div>
+    <div class="fnode">
+      <div class="fnum gold">↗</div>
+      <div class="flbl">Visita tienda</div>
+    </div>
+    <div class="farrow">→</div>
+    <div class="fnode">
+      <div class="fnum gold">$</div>
+      <div class="flbl">Compra</div>
+    </div>
+  </div>
+  <div style="max-width: 580px;">
+    <div class="tactic r d3">
+      <div class="tn">01</div>
+      <div class="tbody">
+        <div class="ttitle">Instagram Shopping activado</div>
+        <div class="tdesc">Etiquetado de productos en cada publicación — elimina la fricción entre descubrimiento y compra. El catálogo Shopify ya está listo para conectarse.</div>
+      </div>
+    </div>
+    <div class="tactic r d4">
+      <div class="tn">02</div>
+      <div class="tbody">
+        <div class="ttitle">Historias con CTA de conversión</div>
+        <div class="tdesc">Las historias registraron picos de 2,500 vistas. Ese momento de máxima atención es la oportunidad para dirigir tráfico directo a Shopify.</div>
+      </div>
+    </div>
+    <div class="tactic r d5">
+      <div class="tn">03</div>
+      <div class="tbody">
+        <div class="ttitle">Bio link optimizado</div>
+        <div class="tdesc">Landing de colección activa, no la homepage. Reducir los clicks entre el perfil y el botón de compra tiene impacto directo en conversión.</div>
+      </div>
+    </div>
+  </div>
+  <span class="snum">09</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     10 · PROYECCIONES
+══════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="label r">Proyecciones</div>
+  <h2 class="display r d1" style="font-size: clamp(2.8rem, 5.5vw, 5.8rem);">
+    Horizonte a 6 meses.
+  </h2>
+
+  <div class="cards">
+    <div class="glass pcard r d2">
+      <div class="pperiod">Fase I · Meses 1 – 2</div>
+      <div class="pnum">18,500</div>
+      <div class="pmet">Seguidores objetivo</div>
+      <div class="pnum s">15K</div>
+      <div class="pmet">Alcance mensual</div>
+      <div class="pacts">
+        <div class="pact">Arquitectura editorial activa</div>
+        <div class="pact">Reels 3× por semana</div>
+        <div class="pact">Instagram Shopping live</div>
+      </div>
+    </div>
+    <div class="glass pcard r d3">
+      <div class="pperiod">Fase II · Meses 3 – 4</div>
+      <div class="pnum">20,500</div>
+      <div class="pmet">Seguidores objetivo</div>
+      <div class="pnum s">30K</div>
+      <div class="pmet">Alcance mensual</div>
+      <div class="pacts">
+        <div class="pact">Primera campaña pagada USA</div>
+        <div class="pact">Colaboraciones activas</div>
+        <div class="pact">Funnel de conversión completo</div>
+      </div>
+    </div>
+    <div class="glass pcard r d4">
+      <div class="pperiod">Fase III · Meses 5 – 6</div>
+      <div class="pnum">24,000+</div>
+      <div class="pmet">Seguidores objetivo</div>
+      <div class="pnum s">55K+</div>
+      <div class="pmet">Alcance mensual</div>
+      <div class="pacts">
+        <div class="pact">Paid + orgánico en escala</div>
+        <div class="pact">Retargeting activo</div>
+        <div class="pact">Optimización y escalado</div>
+      </div>
+    </div>
+  </div>
+  <span class="snum">10</span>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     11 · EL SIGUIENTE PASO
+══════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="glow"></div>
+  <div class="label r">El siguiente paso</div>
+  <h2 class="big-cta r d1">
+    El momento<br>de actuar<br><em>es ahora.</em>
+  </h2>
+
+  <div class="steps r d2">
+    <div class="glass step">
+      <div class="speriod">Inmediato</div>
+      <div class="stitle">Activar Instagram Shopping</div>
+      <div class="sdesc">Conectar el catálogo Shopify con el perfil de Instagram. Cero fricción entre descubrimiento y compra.</div>
+    </div>
+    <div class="glass step">
+      <div class="speriod">Semana 1 – 2</div>
+      <div class="stitle">Calendario editorial 60 días</div>
+      <div class="sdesc">Arquitectura de contenido con Reels, posts e historias: cadencia, narrativa y dirección de arte definidas.</div>
+    </div>
+    <div class="glass step">
+      <div class="speriod">Mes 1</div>
+      <div class="stitle">Primera campaña USA</div>
+      <div class="sdesc">Presupuesto inicial en pauta geo-segmentada en Nueva York y Los Ángeles — audiencia femenina, moda premium, 30–50 años.</div>
+    </div>
+  </div>
+
+  <div class="footer r d3">Oasis Studio · <span>2026</span></div>
+  <span class="snum">11</span>
+</section>
+
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+
+  // Build dot nav
+  const nav = document.getElementById('nav');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    nav.appendChild(d);
+  });
+
+  const dots = Array.from(nav.querySelectorAll('.dot'));
+
+  // Intersection observer — reveal + bars + fills
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const slide = entry.target;
+      const idx = slides.indexOf(slide);
+
+      // Update dots
+      dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+
+      // Reveal elements
+      slide.querySelectorAll('.r').forEach(el => el.classList.add('show'));
+
+      // Animate bars (slide 3)
+      slide.querySelectorAll('.bbar').forEach(bar => {
+        const delay = parseInt(bar.dataset.delay || 0);
+        setTimeout(() => bar.classList.add('grow'), delay + 350);
+      });
+
+      // Animate fills (slide 4)
+      slide.querySelectorAll('.fill').forEach((el, i) => {
+        setTimeout(() => el.classList.add('grow'), 350 + i * 100);
+      });
+      slide.querySelectorAll('.cfill').forEach((el, i) => {
+        setTimeout(() => el.classList.add('grow'), 400 + i * 90);
+      });
+    });
+  }, { threshold: 0.52 });
+
+  slides.forEach(s => io.observe(s));
+
+  // Keyboard navigation
+  let locked = false;
+
+  function navigate(dir) {
+    if (locked) return;
+    const active = slides.find(s => {
+      const r = s.getBoundingClientRect();
+      return r.top > -50 && r.top < 50;
+    }) ?? slides[0];
+    const idx = slides.indexOf(active);
+    const next = slides[idx + dir];
+    if (!next) return;
+    locked = true;
+    next.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => locked = false, 750);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')                    { e.preventDefault(); navigate(-1); }
+  });
+
+  // Click anywhere to advance (skip on interactive elements)
+  document.addEventListener('click', e => {
+    if (e.target.closest('#nav')) return;
+    navigate(1);
+  });
+</script>
+</body>
+</html>
