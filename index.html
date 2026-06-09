@@ -784,6 +784,118 @@
     }
 
     #s11 .footer span { color: var(--gold); }
+
+    /* ════════════════════════════════
+       MOBILE — max-width: 768px
+    ════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Disable mandatory snap — iOS blocks scroll in tall slides */
+      html { scroll-snap-type: y proximity; }
+
+      /* Base slide — auto height, min full screen, top-start layout */
+      .slide {
+        height: auto;
+        min-height: 100svh;
+        padding: 10vh 7vw 8vh;
+        justify-content: flex-start;
+      }
+
+      /* Exceptions that were bottom-aligned */
+      #s1  { justify-content: flex-end; padding-bottom: 10vh; padding-top: 5vh; }
+      #s11 { justify-content: flex-start; padding-top: 10vh; }
+
+      /* Dot nav */
+      #nav  { right: 12px; gap: 7px; }
+      .dot  { width: 3px; height: 3px; }
+
+      /* Slide number — hide on mobile */
+      .snum { display: none; }
+
+      /* ── S1 PORTADA ── */
+      #s1 .headline   { font-size: clamp(3.6rem, 20vw, 5.5rem); }
+      #s1 .meta-text  { font-size: 9px; letter-spacing: 0.15em; }
+      #s1 .brand-tag  { font-size: 9px; top: 20px; }
+
+      /* ── S2 LA MARCA ── */
+      #s2 .grid       { grid-template-columns: 1fr; gap: 1.4rem; }
+      #s2 .quote      { font-size: 1rem; margin-top: 1rem; }
+
+      /* ── S3 INFLEXIÓN — inline style override ── */
+      #s3 .layout     { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      #s3 .chart      { height: 110px; }
+      .snum-big       { font-size: clamp(2rem, 10vw, 3.2rem) !important; }
+      .stat-stack     { gap: 10px; }
+
+      /* ── S4 AUDIENCIA ── */
+      #s4 .grid       { grid-template-columns: 1fr !important; gap: 1rem; }
+      #s4 .big        { font-size: clamp(3rem, 15vw, 5rem); }
+
+      /* ── S5 MOTOR — inline style override ── */
+      #s5 .layout {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+        gap: 1.2rem !important;
+        margin-top: 0.5rem !important;
+      }
+      #s5 .pct-num    { font-size: clamp(5rem, 30vw, 8rem); line-height: 0.88; }
+      #s5 .pct-desc   { font-size: 0.95rem; max-width: 100%; }
+      #s5 .split-num  { font-size: 1.8rem; }
+
+      /* ── S6 OPORTUNIDAD ── */
+      #s6 .two        { grid-template-columns: 1fr; gap: 1rem; }
+      #s6 .onum       { font-size: clamp(2.2rem, 12vw, 3.5rem); }
+      #s6 .ital-quote { font-size: 1rem; margin-top: 1.2rem; }
+
+      /* ── ESTRATEGIAS 7–9: bg number ── */
+      .strat-bg-num {
+        font-size: clamp(5rem, 38vw, 9rem);
+        right: 2vw;
+        top: 10px;
+        transform: none;
+        opacity: 0.04;
+      }
+
+      /* ── S8 USA: insight bar ── */
+      #s8 .insight-bar { flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+
+      /* ── S9 COMERCIO: funnel vertical ── */
+      #s9 .funnel   { flex-direction: column; max-width: 100%; }
+      #s9 .farrow   { display: none; }
+      #s9 .fnode {
+        border: none !important;
+        border-bottom: 1px solid var(--border) !important;
+        border-radius: 0 !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: var(--surface);
+      }
+      #s9 .fnode:first-child {
+        border: 1px solid var(--border) !important;
+        border-bottom: none !important;
+        border-radius: 8px 8px 0 0 !important;
+      }
+      #s9 .fnode:last-child {
+        border: 1px solid var(--border) !important;
+        border-radius: 0 0 8px 8px !important;
+      }
+      #s9 .fnum   { font-size: 1.5rem; }
+      #s9 .flbl   { text-align: right; margin-top: 0; }
+
+      /* ── S10 PROYECCIONES ── */
+      #s10 .cards   { grid-template-columns: 1fr; gap: 0.9rem; }
+      #s10 .pnum    { font-size: clamp(1.8rem, 10vw, 3rem); }
+      #s10 .pnum.s  { font-size: clamp(1.4rem, 8vw, 2.5rem); }
+
+      /* ── S11 CTA ── */
+      #s11 .big-cta { font-size: clamp(2.8rem, 14vw, 4.5rem); }
+      #s11 .steps   { grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.8rem; }
+
+      /* Glass padding tighter */
+      .glass { padding: 16px 18px; }
+    }
   </style>
 </head>
 <body>
